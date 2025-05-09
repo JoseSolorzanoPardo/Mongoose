@@ -105,9 +105,9 @@ Estás creando un **esquema vacío** con Mongoose, lo que significa:
 
 Esto es útil cuando:
 
-- Ya tienes una colección desorganizada.
-- Necesitas capturar datos variados sin estructura fija (como logs o formularios dinámicos).
-- Estás haciendo pruebas iniciales sin esquema aún definido.
+- Ya se tiene una colección desorganizada.
+- Se Necesita capturar datos variados sin estructura fija (como logs o formularios dinámicos).
+- Está haciendo pruebas iniciales sin esquema aún definido.
 
 #### **Línea 2:const Estudiante = mongoose.model('Estudiante', EstudianteSchema, 'estudiantes');**
 
@@ -120,9 +120,9 @@ Ahora supongamos esto:
 #### **Código:**
 ```
 const EstudianteSchema = new mongoose.Schema({
-nombre: String,
-edad: Number,
-curso: String
+  nombre: String,
+  edad: Number,
+  curso: String
 });
 ```
 

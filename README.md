@@ -28,66 +28,48 @@ npm install mongoose
 Aquí un ejemplo básico completo (app.js o index.js):
 ```
 const express = require('express');
-
 const mongoose = require('mongoose');
-
 const app = express();
 
-// Middleware para leer JSON_
-
+// Middleware para leer JSON
 app.use(express.json());
 
-//  Conectar a MongoDB_
-
+// 🔗 Conectar a MongoDB
 mongoose.connect('mongodb://localhost:27017/academia', {})
-
 .then(() => console.log('Conectado a MongoDB :)'))
+.catch(err => console.error('Error al conectar a MongoDB :(', err));
 
-.catch(_err_ => console.error('Error al conectar a MongoDB :(', _err_));
-
-// Esquema sin restricciones_
-
+// Esquema sin restricciones
 const EstudianteSchema = new mongoose.Schema({}, { strict: false });
-
 const Estudiante = mongoose.model('Estudiante', EstudianteSchema, 'estudiantes');
 
-// Ruta para obtener todos los estudiantes_
-
-app.get('/estudiantes', async (_req_, _res_) => {
-
-&nbsp; try {
-
-&nbsp;   const estudiantes = await Estudiante.find();
-
-&nbsp;   _res_.json(estudiantes);
-
-&nbsp; } catch (err) {
-
-&nbsp;   _res_.status(500).send('Error al obtener los estudiantes');
-
-&nbsp; }
-
+// Ruta para obtener todos los estudiantes
+app.get('/estudiantes', async (req, res) => {
+  try {
+    const estudiantes = await Estudiante.find();
+    res.json(estudiantes);
+  } catch (err) {
+    res.status(500).send('Error al obtener los estudiantes');
+  }
 });
 
-// Iniciar servidor_
 
+// Iniciar servidor
 app.listen(3000, () => {
-
-&nbsp; console.log('Servidor corriendo en <http://localhost:3000>');
-
+  console.log('Servidor corriendo en http://localhost:3000');
 });
 ```
 A continuación, se desglosará el anterior código explicando cada una de sus partes:
-
+```
 const express = require('express');
-
+```
 **¿Qué hace?**
 
 - Importa la librería Express (que ya se debe haber instalado con npm install express).
 - Guarda en la constante express la funcionalidad del framework Express. Esto permitiría luego crear un servidor web fácilmente.
-
+```
 const mongoose = require('mongoose');
-
+```
 **¿Qué hace?**
 
 - Importa la librería Mongoose (instalada con npm install mongoose).
@@ -99,12 +81,12 @@ Un esquema de datos (o data schema) es una estructura que define cómo deben ser
 
 
 Supongamos el siguiente bloque de código:
+```
+// Esquema sin restricciones_
+const EstudianteSchema = new mongoose.Schema({}, { strict: false });
+const Estudiante = mongoose.model('Estudiante', EstudianteSchema, 'estudiantes')
+```
 
-_// Esquema sin restricciones_
-
-_/\*const EstudianteSchema = new mongoose.Schema({}, { strict: false });_
-
-_const Estudiante = mongoose.model('Estudiante', EstudianteSchema, 'estudiantes');\*/_
 
 #### **Línea 1: const EstudianteSchema = new mongoose.Schema({}, { strict: false });**
 
@@ -136,16 +118,13 @@ Se está creando un **modelo Mongoose** llamado Estudiante.
 Ahora supongamos esto:
 
 #### **Código:**
-
+```
 const EstudianteSchema = new mongoose.Schema({
-
 nombre: String,
-
 edad: Number,
-
 curso: String
-
 });
+```
 
 **¿Qué hace?**
 
@@ -188,9 +167,9 @@ Una vez definido, puedes usar el modelo Estudiante para interactuar con la colec
 Todo eso estará **validado y limitado** al esquema que se definió.
 
 #### **Codigo**
-
+```
 const app = express();
-
+```
 **¿Qué hace?**
 
 - Crea una instancia de aplicación Express.
@@ -199,19 +178,20 @@ const app = express();
   - Conectar middlewares (app.use(...)).
   - Iniciar el servidor (app.listen(...)).
   - Configurar el servidor en general.
-
+```
 mongoose.connect('mongodb://localhost:27017/academia', {})
 
 .then(() => console.log('Conectado a MongoDB :)'))
 
 .catch(err => console.error('Error al conectar a MongoDB :(', err));
+```
 
 ### **1.mongoose.connect(...)**
 
 Este método conecta la aplicación Express (Node.js) a una base de datos MongoDB.
-
+```
 'mongodb://localhost:27017/academia'
-
+```
 - mongodb://… Es el protocolo que indica que se trata de una conexión a MongoDB.
 - localhost … Indica que la base de datos está corriendo de manera local.
 - 27017 … Es el puerto por defecto que usa MongoDB.
@@ -243,11 +223,10 @@ Este método conecta la aplicación Express (Node.js) a una base de datos MongoD
   - Error al conectar a MongoDB :( &lt;detalle del error&gt;
 
 #### **Explicación de Código**
-
+```
 const EstudianteSchema = new mongoose.Schema({}, { strict: false });
-
 const Estudiante = mongoose.model('Estudiante', EstudianteSchema, 'estudiantes');
-
+```
 #### **Línea 1: const EstudianteSchema = new mongoose.Schema({}, { strict: false });**
 
 **¿Qué está pasando aquí?**
@@ -279,24 +258,17 @@ const Estudiante = mongoose.model('Estudiante', EstudianteSchema, 'estudiantes')
 |     |     |
 
 #### **Código explicado**
-
+```
 // Ruta para obtener todos los estudiantes
-
 app.get('/estudiantes', async (req, res) => {
-
 try {
-
 const estudiantes = await Estudiante.find();
-
 res.json(estudiantes);
-
 } catch (err) {
-
 res.status(500).send('Error al obtener los estudiantes');
-
 }
-
 });
+```
 
 #### **1\. app.get('/estudiantes', async (req, res) => { ... })**
 
@@ -325,31 +297,20 @@ res.status(500).send('Error al obtener los estudiantes');
 - Esto evita que la aplicación se caiga si algo falla.
 
 ## Codigo
-
+```
 // GET /buscar?nombre=ana
-
 app.get('/buscar', async (req, res) => {
-
 const nombreBuscado = req.query.nombre;
-
 try {
-
 const resultados = await Estudiante.find({
-
 nombre: { $regex: nombreBuscado, $options: 'i' }
-
 });
-
 res.json(resultados);
-
 } catch (err) {
-
 res.status(500).send('Error al buscar estudiantes');
-
 }
-
 });
-
+```
 #### **1.app.get('/buscar', async (req, res) => { ... })**
 
 - Define una **ruta GET** en Express.
@@ -393,26 +354,18 @@ Ejemplos de coincidencia para 'ana':
 - Resultado: Lista de estudiantes cuyo nombre contiene "ana".
 
 ## **Código:**
-
+```
 // Ruta POST para insertar un documento sin restricciones
-
 app.post('/guardarEstudiante', async (req, res) => {
-
 try {
-
 const estudiante = new Estudiante(req.body); // Acepta cualquier estructura
-
 const guardado = await estudiante.save();
-
 res.status(201).json(guardado);
-
 } catch (err) {
-
 res.status(400).send(' Error al guardar el estudiante :(');
-
 }
-
 });
+```
 
 #### **1.app.post('/guardarEstudiante', async (req, res) => { ... })**
 
@@ -424,7 +377,7 @@ res.status(400).send(' Error al guardar el estudiante :(');
 
 - Crea una nueva instancia del modelo Estudiante con los datos enviados en la solicitud.
 - req.body contiene el JSON enviado, por ejemplo:
-
+```
 {
 
 "nombre": "Daniela",
@@ -434,6 +387,7 @@ res.status(400).send(' Error al guardar el estudiante :(');
 "programa": "Ingeniería de Sistemas"
 
 }
+```
 
 - **Como el esquema es flexible (strict: false)**, se puede enviar **cualquier campo**, incluso si nunca fue definido en un esquema tradicional.
 
@@ -466,39 +420,26 @@ res.status(400).send(' Error al guardar el estudiante :(');
 - Método: POST
 - URL: <http://localhost:3000/guardarEstudiante>
 - Body (JSON):
-
+```
 {
-
 "nombre": "Sofía",
-
 "edad": 20,
-
 "email": "<sofia@email.com>",
-
 "materias": \["Bases de Datos", "Algoritmos"\]
-
 }
-
+```
 #### **Código completo:**
 
 // PUT /estudiantes/:id
-
+```
 app.put('/estudiantes/:id', async (req, res) => {
-
 const id = req.params.id; // Se obtiene el ID desde la URL
-
 const nuevosDatos = req.body; // Datos nuevos desde el cuerpo de la solicitud
-
 try {
-
 const actualizado = await Estudiante.findByIdAndUpdate(
-
 id,
-
 { $set: nuevosDatos },
-
 { new: true } // Devuelve el documento ya actualizado
-
 );
 
 if (!actualizado) {
@@ -516,7 +457,7 @@ res.status(400).send('Error al actualizar el estudiante');
 }
 
 });
-
+```
 #### **1.app.put('/estudiantes/:id', async (req, res) => { ... })**
 
 - Define una **ruta PUT** en Express.
@@ -534,13 +475,13 @@ res.status(400).send('Error al actualizar el estudiante');
 - Por ejemplo:
 - {
 - "edad": 25,
-- "correo": "<nuevo@email.com>"
+- "correo": "nuevo@email.com"
 - }
 
 #### **4.await Estudiante.findByIdAndUpdate(...)**
 
 Este es el corazón de la operación:
-
+```
 await Estudiante.findByIdAndUpdate(
 
 id,
@@ -550,8 +491,9 @@ id,
 { new: true }
 
 );
+```
 
-- id: el \_id del documento que quieres actualizar.
+- id: el _id del documento que quieres actualizar.
 - $set: nuevosDatos: MongoDB actualiza solo los campos enviados.
 - { new: true }: hace que se devuelva el documento ya actualizado (si no se pone, devuelve el antiguo).
 
@@ -569,32 +511,21 @@ id,
 - Se responde con código **400** (solicitud mal hecha) y un mensaje de error.
 
 **Código:**
-
+```
 // DELETE /deleteEstudiante/:id
-
 app.delete('/deleteEstudiante/:id', async (req, res) => {
-
 const id = req.params.id;
-
 try {
-
 const eliminado = await Estudiante.findByIdAndDelete(id);
-
 if (!eliminado) {
-
 return res.status(404).send('Estudiante no encontrado');
-
 }
-
 res.send(\`Estudiante con ID ${id} eliminado exitosamente\`);
-
 } catch (err) {
-
 res.status(400).send('Error al eliminar el estudiante');
-
 }
-
 });
+```
 
 #### **1.app.delete('/deleteEstudiante/:id', async (req, res) => { ... })**
 

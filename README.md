@@ -94,8 +94,8 @@ const Estudiante = mongoose.model('Estudiante', EstudianteSchema, 'estudiantes')
 
 Estás creando un **esquema vacío** con Mongoose, lo que significa:
 
-1. {} → No se define ningún campo fijo (no hay nombre, edad, etc.).
-2. { strict: false } → Le dices a Mongoose:  
+1. {} ... No se define ningún campo fijo (no hay nombre, edad, etc.).
+2. { strict: false } ... Le dices a Mongoose:  
     _“Acepta cualquier campo, aunque no esté en el esquema”_.
 
 **¿Qué implica strict: false?**

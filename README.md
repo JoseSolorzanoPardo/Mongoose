@@ -262,10 +262,10 @@ const Estudiante = mongoose.model('Estudiante', EstudianteSchema, 'estudiantes')
 // Ruta para obtener todos los estudiantes
 app.get('/estudiantes', async (req, res) => {
 try {
-const estudiantes = await Estudiante.find();
-res.json(estudiantes);
+  const estudiantes = await Estudiante.find();
+  res.json(estudiantes);
 } catch (err) {
-res.status(500).send('Error al obtener los estudiantes');
+  res.status(500).send('Error al obtener los estudiantes');
 }
 });
 ```
@@ -300,14 +300,13 @@ res.status(500).send('Error al obtener los estudiantes');
 ```
 // GET /buscar?nombre=ana
 app.get('/buscar', async (req, res) => {
-const nombreBuscado = req.query.nombre;
+  const nombreBuscado = req.query.nombre;
 try {
-const resultados = await Estudiante.find({
-nombre: { $regex: nombreBuscado, $options: 'i' }
-});
-res.json(resultados);
+  const resultados = await Estudiante.find({
+  nombre: { $regex: nombreBuscado, $options: 'i' }});
+  res.json(resultados);
 } catch (err) {
-res.status(500).send('Error al buscar estudiantes');
+  res.status(500).send('Error al buscar estudiantes');
 }
 });
 ```
@@ -358,11 +357,11 @@ Ejemplos de coincidencia para 'ana':
 // Ruta POST para insertar un documento sin restricciones
 app.post('/guardarEstudiante', async (req, res) => {
 try {
-const estudiante = new Estudiante(req.body); // Acepta cualquier estructura
-const guardado = await estudiante.save();
-res.status(201).json(guardado);
+  const estudiante = new Estudiante(req.body); // Acepta cualquier estructura
+  const guardado = await estudiante.save();
+  res.status(201).json(guardado);
 } catch (err) {
-res.status(400).send(' Error al guardar el estudiante :(');
+  res.status(400).send(' Error al guardar el estudiante :(');
 }
 });
 ```
@@ -379,13 +378,9 @@ res.status(400).send(' Error al guardar el estudiante :(');
 - req.body contiene el JSON enviado, por ejemplo:
 ```
 {
-
 "nombre": "Daniela",
-
 "edad": 24,
-
 "programa": "Ingeniería de Sistemas"
-
 }
 ```
 
@@ -418,7 +413,7 @@ res.status(400).send(' Error al guardar el estudiante :(');
 #### **7.Ejemplo de uso en Postman**
 
 - Método: POST
-- URL: <http://localhost:3000/guardarEstudiante>
+- URL: http://localhost:3000/guardarEstudiante
 - Body (JSON):
 ```
 {
@@ -433,29 +428,24 @@ res.status(400).send(' Error al guardar el estudiante :(');
 // PUT /estudiantes/:id
 ```
 app.put('/estudiantes/:id', async (req, res) => {
-const id = req.params.id; // Se obtiene el ID desde la URL
-const nuevosDatos = req.body; // Datos nuevos desde el cuerpo de la solicitud
+  const id = req.params.id; // Se obtiene el ID desde la URL
+  const nuevosDatos = req.body; // Datos nuevos desde el cuerpo de la solicitud
 try {
-const actualizado = await Estudiante.findByIdAndUpdate(
-id,
-{ $set: nuevosDatos },
-{ new: true } // Devuelve el documento ya actualizado
-);
+  const actualizado = await Estudiante.findByIdAndUpdate(
+    id,
+    { $set: nuevosDatos },
+    { new: true } // Devuelve el documento ya actualizado
+    );
 
-if (!actualizado) {
-
-return res.status(404).send('Estudiante no encontrado');
-
-}
+  if (!actualizado) {
+    return res.status(404).send('Estudiante no encontrado');
+  }
 
 res.json(actualizado);
 
 } catch (err) {
-
-res.status(400).send('Error al actualizar el estudiante');
-
+  res.status(400).send('Error al actualizar el estudiante');
 }
-
 });
 ```
 #### **1.app.put('/estudiantes/:id', async (req, res) => { ... })**
@@ -473,11 +463,12 @@ res.status(400).send('Error al actualizar el estudiante');
 
 - Obtiene los nuevos datos que se desean actualizar, enviados en el **cuerpo del request** en formato JSON.
 - Por ejemplo:
-- {
-- "edad": 25,
-- "correo": "nuevo@email.com"
-- }
-
+```
+ {
+ "edad": 25,
+ "correo": "nuevo@email.com"
+ }
+```
 #### **4.await Estudiante.findByIdAndUpdate(...)**
 
 Este es el corazón de la operación:
@@ -514,24 +505,24 @@ id,
 ```
 // DELETE /deleteEstudiante/:id
 app.delete('/deleteEstudiante/:id', async (req, res) => {
-const id = req.params.id;
-try {
-const eliminado = await Estudiante.findByIdAndDelete(id);
-if (!eliminado) {
-return res.status(404).send('Estudiante no encontrado');
-}
-res.send(\`Estudiante con ID ${id} eliminado exitosamente\`);
-} catch (err) {
-res.status(400).send('Error al eliminar el estudiante');
-}
+  const id = req.params.id;
+  try {
+    const eliminado = await Estudiante.findByIdAndDelete(id);
+  if (!eliminado) {
+    return res.status(404).send('Estudiante no encontrado');
+  }
+    res.send(\`Estudiante con ID ${id} eliminado exitosamente\`);
+  } catch (err) {
+    res.status(400).send('Error al eliminar el estudiante');
+    }
 });
 ```
 
 #### **1.app.delete('/deleteEstudiante/:id', async (req, res) => { ... })**
 
 - Crea una ruta DELETE que escucha peticiones como:
-- DELETE <http://localhost:3000/deleteEstudiante/661fbcd123abcde98765fgh>
-- :id es un parámetro dinámico que representa el \_id del estudiante a eliminar.
+- DELETE http://localhost:3000/deleteEstudiante/661fbcd123abcde98765fgh
+- :id es un parámetro dinámico que representa el _id del estudiante a eliminar.
 - La función es async porque se usa await para consultar la base de datos.
 
 #### **2.const id = req.params.id;**

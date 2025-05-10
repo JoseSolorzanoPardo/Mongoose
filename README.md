@@ -65,15 +65,15 @@ const express = require('express');
 ```
 **¿Qué hace?**
 
-- Importa la librería Express (que ya se debe haber instalado con npm install express).
-- Guarda en la constante express la funcionalidad del framework Express. Esto permitiría luego crear un servidor web fácilmente.
+ Importa la librería Express (que ya se debe haber instalado con npm install express).
+ Guarda en la constante express la funcionalidad del framework Express. Esto permitiría luego crear un servidor web fácilmente.
 ```
 const mongoose = require('mongoose');
 ```
 **¿Qué hace?**
 
-- Importa la librería Mongoose (instalada con npm install mongoose).
-- mongoose es una herramienta para conectar una app a una base de datos MongoDB y definir esquemas de datos. Como tal permite un "puente" entre la aplicación en Node.js y MongoDB.
+ Importa la librería Mongoose (instalada con npm install mongoose).
+ mongoose es una herramienta para conectar una app a una base de datos MongoDB y definir esquemas de datos. Como tal permite un "puente" entre la aplicación en Node.js y MongoDB.
 
 ### **¿Qué es un esquema de datos?**
 
@@ -100,14 +100,14 @@ Estás creando un **esquema vacío** con Mongoose, lo que significa:
 
 **¿Qué implica strict: false?**
 
-- Permite insertar, leer y modificar cualquier campo arbitrario.
-- MongoDB ya es flexible por sí solo, pero con strict: false, Mongoose también se vuelve flexible, y no impone restricciones.
+ Permite insertar, leer y modificar cualquier campo arbitrario.
+ MongoDB ya es flexible por sí solo, pero con strict: false, Mongoose también se vuelve flexible, y no impone restricciones.
 
 Esto es útil cuando:
 
-- Ya se tiene una colección desorganizada.
-- Se Necesita capturar datos variados sin estructura fija (como logs o formularios dinámicos).
-- Está haciendo pruebas iniciales sin esquema aún definido.
+ Ya se tiene una colección desorganizada.
+ Se Necesita capturar datos variados sin estructura fija (como logs o formularios dinámicos).
+ Está haciendo pruebas iniciales sin esquema aún definido.
 
 #### **Línea 2:const Estudiante = mongoose.model('Estudiante', EstudianteSchema, 'estudiantes');**
 
@@ -132,14 +132,14 @@ Se Está creando un esquema con Mongoose para la colección de estudiantes.
 
 **¿Qué define este esquema?**
 
-- **nombre: String** → El campo nombre debe ser una cadena de texto.
-- **edad: Number** → El campo edad debe ser un número.
-- **curso: String** → El campo curso también debe ser una cadena.
+ **nombre: String** → El campo nombre debe ser una cadena de texto.
+ **edad: Number** → El campo edad debe ser un número.
+ **curso: String** → El campo curso también debe ser una cadena.
 
 **Este esquema es estricto por defecto**, así que:
 
-- Si intenta guardar un campo no definido (como notas, email, etc.), **Mongoose lo ignora** a menos que lo permitas explícitamente.
-- Si el tipo no coincide (por ejemplo, edad como "veinte"), puede lanzar un error o intentar convertirlo.
+ Si intenta guardar un campo no definido (como notas, email, etc.), **Mongoose lo ignora** a menos que lo permitas explícitamente.
+ Si el tipo no coincide (por ejemplo, edad como "veinte"), puede lanzar un error o intentar convertirlo.
 
 #### **Línea 2:**
 
@@ -159,10 +159,10 @@ Estás creando un **modelo de Mongoose** llamado Estudiante.
 
 Una vez definido, puedes usar el modelo Estudiante para interactuar con la colección estudiantes así:
 
-- Estudiante.find() → buscar estudiantes.
-- Estudiante.create({...}) → insertar uno nuevo.
-- Estudiante.findByIdAndUpdate() → actualizar.
-- Estudiante.deleteOne() → eliminar.
+ Estudiante.find() → buscar estudiantes.
+ Estudiante.create({...}) → insertar uno nuevo.
+ Estudiante.findByIdAndUpdate() → actualizar.
+ Estudiante.deleteOne() → eliminar.
 
 Todo eso estará **validado y limitado** al esquema que se definió.
 
